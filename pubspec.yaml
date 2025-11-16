@@ -30,10 +30,13 @@ dependencies:
   flutter:
     sdk: flutter
 
-
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+  # 路由框架 - go_router是Flutter官方推荐的路由解决方案
+  go_router: ^13.0.0
+  # 状态管理 - Provider是Flutter推荐的状态管理方案，用于MVVM架构
+  provider: ^6.1.1
 
 dev_dependencies:
   flutter_test:
