@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import '../../models/news_article.dart';
 import '../../viewmodels/module1/module1_viewmodel.dart';
+import '../../routes/app_router.dart';
 
 /// 模块1 View
 /// MVVM架构中的View层，负责模块1的UI展示
@@ -255,12 +256,26 @@ class _PinnedArticleHeader extends StatelessWidget {
     return Container(
       width: double.infinity,
       margin: const EdgeInsets.fromLTRB(16, 16, 16, 4),
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Column(
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          // 添加点击波纹效果
+          borderRadius: BorderRadius.circular(16),
+          onTap: () {
+            // 点击卡片后跳转到WebView页面
+            AppRouter.pushWebView(
+              context,
+              url: 'http://106.15.7.132:3000/',
+              title: '加载网页',
+            );
+          },
+          child: Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
@@ -312,6 +327,9 @@ class _PinnedArticleHeader extends StatelessWidget {
             style: const TextStyle(fontSize: 13, color: Colors.black54),
           ),
         ],
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -382,9 +400,20 @@ class _NewsCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
         ),
         elevation: 2,
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Row(
+        child: InkWell(
+          // 添加点击波纹效果
+          borderRadius: BorderRadius.circular(16),
+          onTap: () {
+            // 点击卡片后跳转到WebView页面
+            AppRouter.pushWebView(
+              context,
+              url: 'http://106.15.7.132:3000/',
+              title: '加载网页',
+            );
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Row(
             children: [
               Container(
                 width: 80,
@@ -475,6 +504,7 @@ class _NewsCard extends StatelessWidget {
                 ),
               ),
             ],
+            ),
           ),
         ),
       ),

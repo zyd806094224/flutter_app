@@ -6,6 +6,7 @@ import '../views/module1/module1_view.dart';
 import '../views/module2/module2_view.dart';
 import '../views/module3/module3_view.dart';
 import '../views/module4/module4_view.dart';
+import '../views/webview/webview_view.dart';
 
 /// 应用路由配置类
 /// 使用go_router进行路由管理
@@ -55,6 +56,32 @@ class AppRouter {
             ),
           ],
         ),
+        // 公共WebView页面路由 - 支持通过URL参数传递要加载的网页地址
+        GoRoute(
+          path: '/webview',
+          name: 'webview',
+          builder: (context, state) {
+            // 从路由参数中获取URL
+            final url = state.uri.queryParameters['url'] ?? '';
+            // 从路由参数中获取标题（可选）
+            final title = state.uri.queryParameters['title'];
+            
+            // 如果URL为空，返回错误页面
+            if (url.isEmpty) {
+              return Scaffold(
+                appBar: AppBar(title: const Text('错误')),
+                body: const Center(
+                  child: Text('URL参数不能为空'),
+                ),
+              );
+            }
+            
+            return WebViewPage(
+              url: url,
+              title: title,
+            );
+          },
+        ),
       ],
     );
   }
@@ -87,6 +114,44 @@ class AppRouter {
   /// 便捷方法：跳转到模块4
   static void goToModule4(BuildContext context) {
     context.go('/home/module4');
+  }
+
+  /// 便捷方法：跳转到公共WebView页面
+  /// [url] 要加载的网页URL地址（必填）
+  /// [title] 页面标题（可选，如果不提供则自动从网页获取）
+  static void goToWebView(
+    BuildContext context, {
+    required String url,
+    String? title,
+  }) {
+    // 构建带参数的URL
+    final uri = Uri(
+      path: '/webview',
+      queryParameters: {
+        'url': url,
+        if (title != null) 'title': title,
+      },
+    );
+    context.go(uri.toString());
+  }
+
+  /// 便捷方法：使用push方式跳转到公共WebView页面（保留返回栈）
+  /// [url] 要加载的网页URL地址（必填）
+  /// [title] 页面标题（可选，如果不提供则自动从网页获取）
+  static void pushWebView(
+    BuildContext context, {
+    required String url,
+    String? title,
+  }) {
+    // 构建带参数的URL
+    final uri = Uri(
+      path: '/webview',
+      queryParameters: {
+        'url': url,
+        if (title != null) 'title': title,
+      },
+    );
+    context.push(uri.toString());
   }
 }
 
