@@ -59,13 +59,47 @@ class _Module3ViewState extends State<Module3View> {
                   ),
                   const SizedBox(height: 10),
                   const Text(
-                    '这是购物车模块，您可以在这里开发购物车相关功能',
+                    '这是购物车模块，下面演示如何发起网络请求',
                     style: TextStyle(
                       fontSize: 16,
                       color: Colors.grey,
                     ),
                     textAlign: TextAlign.center,
                   ),
+                  const SizedBox(height: 24),
+                  ElevatedButton.icon(
+                    icon: const Icon(Icons.cloud_download),
+                    label: Text(
+                      viewModel.isLoading ? '请求中...' : '调用 /user/test 接口',
+                    ),
+                    onPressed: viewModel.isLoading
+                        ? null
+                        : () {
+                            viewModel.fetchGetTest();
+                          },
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 24,
+                        vertical: 12,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  if (viewModel.isLoading) const CircularProgressIndicator(),
+                  if (!viewModel.isLoading) ...[
+                    const SizedBox(height: 12),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 24),
+                      child: Text(
+                        viewModel.resultMessage,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontSize: 14,
+                          color: Colors.black87,
+                        ),
+                      ),
+                    ),
+                  ],
                 ],
               ),
             );

@@ -41,6 +41,8 @@ dependencies:
   pull_to_refresh: ^2.0.0
   # WebView组件 - 用于加载网页
   webview_flutter: ^4.4.2
+  # 网络请求 - Dio是企业级常用的网络请求库
+  dio: ^5.4.0
 
 dev_dependencies:
   flutter_test:
