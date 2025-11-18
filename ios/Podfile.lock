@@ -1,0 +1,22 @@
+PODS:
+  - Flutter (1.0.0)
+  - webview_flutter_wkwebview (0.0.1):
+    - Flutter
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - webview_flutter_wkwebview (from `.symlinks/plugins/webview_flutter_wkwebview/ios`)
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  webview_flutter_wkwebview:
+    :path: ".symlinks/plugins/webview_flutter_wkwebview/ios"
+
+SPEC CHECKSUMS:
+  Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
+  webview_flutter_wkwebview: daa94b5ed120e19439eb7f797649768d6360ebdd
+
+PODFILE CHECKSUM: 2a0ca037db7d19ff36eb24113fe91948a95a1215
+
+COCOAPODS: 1.16.2
