@@ -67,15 +67,35 @@ class _Module3ViewState extends State<Module3View> {
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 24),
+                  // GET 按钮
                   ElevatedButton.icon(
                     icon: const Icon(Icons.cloud_download),
                     label: Text(
-                      viewModel.isLoading ? '请求中...' : '调用 /user/test 接口',
+                      viewModel.isLoading ? '请求中...' : '调用 GET /user/test',
                     ),
                     onPressed: viewModel.isLoading
                         ? null
                         : () {
                             viewModel.fetchGetTest();
+                          },
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 24,
+                        vertical: 12,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  // POST 按钮
+                  ElevatedButton.icon(
+                    icon: const Icon(Icons.send),
+                    label: Text(
+                      viewModel.isLoading ? '请求中...' : '调用 POST /user/login',
+                    ),
+                    onPressed: viewModel.isLoading
+                        ? null
+                        : () {
+                            viewModel.fetchPostTest();
                           },
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(
@@ -109,4 +129,3 @@ class _Module3ViewState extends State<Module3View> {
     );
   }
 }
-

@@ -30,11 +30,11 @@ class Module3ViewModel extends ChangeNotifier {
   }
 
   /// 调用示例接口：GET /user/test
-  /// 用于演示如何通过DioClient发起网络请求
+  /// 用于演示如何通过DioClient发起GET请求
   Future<void> fetchGetTest() async {
     if (_isLoading) return;
     _isLoading = true;
-    _resultMessage = '请求中...';
+    _resultMessage = 'GET /user/test 请求中...';
     notifyListeners();
 
     try {
@@ -47,14 +47,53 @@ class Module3ViewModel extends ChangeNotifier {
       });
 
       if (response.isSuccess) {
-        _resultMessage = '请求成功：${response.data ?? response.raw}';
+        _resultMessage = 'GET 请求成功：${response.data ?? response.raw}';
       } else {
-        _resultMessage = '业务失败(${response.code})：${response.message}';
+        _resultMessage = 'GET 业务失败(${response.code})：${response.message}';
       }
     } on NetworkException catch (e) {
-      _resultMessage = '请求失败：${e.message}';
+      _resultMessage = 'GET 请求失败：${e.message}';
     } catch (e) {
-      _resultMessage = '未知错误：$e';
+      _resultMessage = 'GET 未知错误：$e';
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  /// 调用示例接口：POST /user/login
+  /// 请求体：{ no: 'zhangsan', password: '123456' }
+  /// 用于演示如何通过DioClient发起POST请求
+  Future<void> fetchPostTest() async {
+    if (_isLoading) return;
+    _isLoading = true;
+    _resultMessage = 'POST /user/login 请求中...';
+    notifyListeners();
+
+    try {
+      final response = await DioClient.instance.post<Map<String, dynamic>>(
+        '/user/login',
+        data: {
+          'no': 'zhangsan',
+          'password': '123456',
+        },
+        dataParser: (data) {
+          if (data is Map<String, dynamic>) {
+            return data;
+          }
+          return {'data': data};
+        },
+      );
+
+      if (response.isSuccess) {
+        _resultMessage = 'POST 请求成功：${response.data ?? response.raw}';
+      } else {
+        _resultMessage = 'POST 业务失败(${response.code})：${response.message}';
+      }
+    } on NetworkException catch (e) {
+      _resultMessage = 'POST 请求失败：${e.message}';
+    } catch (e) {
+      _resultMessage = 'POST 未知错误：$e';
     } finally {
       _isLoading = false;
       notifyListeners();
