@@ -129,7 +129,8 @@ class _Module1ViewState extends State<Module1View> {
                 slivers: [
                   // 顶部“正在关注”吸顶卡片上方可以放轮播、Banner等，这里简单空白
                   SliverToBoxAdapter(
-                    child: _PinnedArticleHeader(article: viewModel.pinnedArticle),
+                    child:
+                        _PinnedArticleHeader(article: viewModel.pinnedArticle),
                   ),
                   // 分区Tab，吸顶
                   SliverPersistentHeader(
@@ -276,57 +277,58 @@ class _PinnedArticleHeader extends StatelessWidget {
               borderRadius: BorderRadius.circular(16),
             ),
             child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.primary,
-                      borderRadius: BorderRadius.circular(100),
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 4),
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).colorScheme.primary,
+                            borderRadius: BorderRadius.circular(100),
+                          ),
+                          child: const Text(
+                            '正在关注',
+                            style: TextStyle(color: Colors.white, fontSize: 12),
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          article!.category,
+                          style: const TextStyle(
+                            fontSize: 12,
+                            color: Colors.black54,
+                          ),
+                        ),
+                      ],
                     ),
-                    child: const Text(
-                      '正在关注',
-                      style: TextStyle(color: Colors.white, fontSize: 12),
+                    Text(
+                      _timeLabel(article!.publishTime),
+                      style:
+                          const TextStyle(fontSize: 12, color: Colors.black45),
                     ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  article!.title,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
                   ),
-                  const SizedBox(width: 8),
-                  Text(
-                    article!.category,
-                    style: const TextStyle(
-                      fontSize: 12,
-                      color: Colors.black54,
-                    ),
-                  ),
-                ],
-              ),
-              Text(
-                _timeLabel(article!.publishTime),
-                style: const TextStyle(fontSize: 12, color: Colors.black45),
-              ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          Text(
-            article!.title,
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            article!.summary,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            style: const TextStyle(fontSize: 13, color: Colors.black54),
-          ),
-        ],
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  article!.summary,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(fontSize: 13, color: Colors.black54),
+                ),
+              ],
             ),
           ),
         ),
@@ -341,7 +343,7 @@ class _PinnedArticleHeader extends StatelessWidget {
     if (diff.inMinutes < 60) return '${diff.inMinutes}分钟前';
     if (diff.inHours < 24) return '${diff.inHours}小时前';
     return '${diff.inDays}天前';
-    }
+  }
 }
 
 /// 快速定位到指定条目的Chip
@@ -414,96 +416,97 @@ class _NewsCard extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Row(
-            children: [
-              Container(
-                width: 80,
-                height: double.infinity,
-                decoration: BoxDecoration(
-                  color: article.accentColor,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Center(
-                  child: Text(
-                    '#${index + 1}',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).primaryColor,
+              children: [
+                Container(
+                  width: 80,
+                  height: double.infinity,
+                  decoration: BoxDecoration(
+                    color: article.accentColor,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Center(
+                    child: Text(
+                      '#${index + 1}',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).primaryColor,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      article.title,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        article.title,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
-                    ),
-                    Text(
-                      article.summary,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        fontSize: 13,
-                        color: Colors.black54,
+                      Text(
+                        article.summary,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontSize: 13,
+                          color: Colors.black54,
+                        ),
                       ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            const Icon(Icons.person, size: 16),
-                            const SizedBox(width: 4),
-                            Text(
-                              article.author,
-                              style: const TextStyle(
-                                fontSize: 12,
-                                color: Colors.black54,
-                              ),
-                            ),
-                            const SizedBox(width: 12),
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 8,
-                                vertical: 2,
-                              ),
-                              decoration: BoxDecoration(
-                                color: Colors.black.withOpacity(0.05),
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              child: Text(
-                                article.category,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              const Icon(Icons.person, size: 16),
+                              const SizedBox(width: 4),
+                              Text(
+                                article.author,
                                 style: const TextStyle(
-                                  fontSize: 11,
+                                  fontSize: 12,
                                   color: Colors.black54,
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                        Text(
-                          _PinnedArticleHeader._timeLabel(article.publishTime),
-                          style: const TextStyle(
-                            fontSize: 12,
-                            color: Colors.black45,
+                              const SizedBox(width: 12),
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 8,
+                                  vertical: 2,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: Colors.black.withOpacity(0.05),
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: Text(
+                                  article.category,
+                                  style: const TextStyle(
+                                    fontSize: 11,
+                                    color: Colors.black54,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                          Text(
+                            _PinnedArticleHeader._timeLabel(
+                                article.publishTime),
+                            style: const TextStyle(
+                              fontSize: 12,
+                              color: Colors.black45,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
             ),
           ),
         ),
@@ -544,4 +547,3 @@ class _LoadMoreIndicator extends StatelessWidget {
     return const SizedBox.shrink();
   }
 }
-
