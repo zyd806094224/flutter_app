@@ -13,10 +13,14 @@ class WebViewPage extends StatefulWidget {
   /// 页面标题（可选，如果不提供则自动从网页获取）
   final String? title;
 
+  /// 额外的自定义参数
+  final Map<String, String>? extraParams;
+
   const WebViewPage({
     Key? key,
     required this.url,
     this.title,
+    this.extraParams,
   }) : super(key: key);
 
   @override
@@ -30,6 +34,12 @@ class _WebViewPageState extends State<WebViewPage> {
   @override
   void initState() {
     super.initState();
+
+    // 打印自定义参数用于调试
+    if (widget.extraParams?.isNotEmpty == true) {
+      debugPrint('WebView自定义参数: ${widget.extraParams}');
+    }
+
     // 创建ViewModel实例，传入URL和标题
     _viewModel = WebViewViewModel(
       webUrl: widget.url,
@@ -64,6 +74,8 @@ class _WebViewPageState extends State<WebViewPage> {
                 _viewModel.setPageTitle(title);
               }
             });
+            // 页面加载完成后注入自定义参数到WebView
+            _injectCustomParams();
             // 更新导航状态
             _updateNavigationState();
           },
@@ -78,6 +90,26 @@ class _WebViewPageState extends State<WebViewPage> {
 
     // 监听WebView的导航状态变化
     _updateNavigationState();
+  }
+
+  /// 向WebView注入自定义参数
+  Future<void> _injectCustomParams() async {
+    if (widget.extraParams?.isNotEmpty == true) {
+      // 将参数转换为JSON字符串
+      final paramsJson = widget.extraParams!.entries
+          .map((entry) => '${entry.key}: ${entry.value}')
+          .join(', ');
+
+      // 注入JavaScript代码，将参数存储在window.flutterParams对象中
+      await _webViewController.runJavaScript('''
+        window.flutterParams = {
+          ${widget.extraParams!.entries.map((e) => "'${e.key}': '${e.value}'").join(', ')}
+        };
+        console.log('Flutter注入的自定义参数:', window.flutterParams);
+      ''');
+
+      debugPrint('已向WebView注入自定义参数: ${widget.extraParams}');
+    }
   }
 
   /// 更新导航状态（是否可以返回/前进）

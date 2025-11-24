@@ -56,7 +56,7 @@ class AppRouter {
             ),
           ],
         ),
-        // 公共WebView页面路由 - 支持通过URL参数传递要加载的网页地址
+        // 公共WebView页面路由 - 支持通过URL参数传递要加载的网页地址和自定义参数
         GoRoute(
           path: '/webview',
           name: 'webview',
@@ -65,7 +65,15 @@ class AppRouter {
             final url = state.uri.queryParameters['url'] ?? '';
             // 从路由参数中获取标题（可选）
             final title = state.uri.queryParameters['title'];
-            
+
+            // 获取所有自定义参数（排除已知的url和title参数）
+            final extraParams = <String, String>{};
+            state.uri.queryParameters.forEach((key, value) {
+              if (key != 'url' && key != 'title') {
+                extraParams[key] = value!;
+              }
+            });
+
             // 如果URL为空，返回错误页面
             if (url.isEmpty) {
               return Scaffold(
@@ -75,10 +83,11 @@ class AppRouter {
                 ),
               );
             }
-            
+
             return WebViewPage(
               url: url,
               title: title,
+              extraParams: extraParams,
             );
           },
         ),
@@ -138,18 +147,28 @@ class AppRouter {
   /// 便捷方法：使用push方式跳转到公共WebView页面（保留返回栈）
   /// [url] 要加载的网页URL地址（必填）
   /// [title] 页面标题（可选，如果不提供则自动从网页获取）
+  /// [extraParams] 额外的自定义参数（可选）
   static void pushWebView(
     BuildContext context, {
     required String url,
     String? title,
+    Map<String, String>? extraParams,
   }) {
+    // 构建基础参数
+    final queryParams = <String, String>{
+      'url': url,
+      if (title != null) 'title': title,
+    };
+
+    // 添加自定义参数
+    if (extraParams != null) {
+      queryParams.addAll(extraParams);
+    }
+
     // 构建带参数的URL
     final uri = Uri(
       path: '/webview',
-      queryParameters: {
-        'url': url,
-        if (title != null) 'title': title,
-      },
+      queryParameters: queryParams,
     );
     context.push(uri.toString());
   }

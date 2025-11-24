@@ -411,6 +411,12 @@ class _NewsCard extends StatelessWidget {
               context,
               url: 'http://106.15.7.132:3000/',
               title: '加载网页',
+              extraParams: {
+                'userId': '12345',
+                'token': 'abc123def456',
+                'theme': 'dark',
+                'language': 'zh-CN',
+              }
             );
           },
           child: Padding(
